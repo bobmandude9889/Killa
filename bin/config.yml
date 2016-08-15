@@ -1,0 +1,3 @@
+commands:
+  #Cooldown of /heal for 1 minute
+  heal: 60

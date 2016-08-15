@@ -1,0 +1,14 @@
+name: Killa
+version: 1.0
+author: bobmandude9889
+main: net.bobmandude9889.Main
+
+commands:
+  fixall:
+    usage: /<command>
+    description: Fixes all items in inventory
+    
+permissions:
+  fixall.use:
+    default: OP
+    description: Access to /fixall
