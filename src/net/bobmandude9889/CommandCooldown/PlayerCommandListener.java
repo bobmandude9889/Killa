@@ -1,4 +1,4 @@
-package net.bobmandude9889.CommandCooldown;
+package net.bobmandude9889.commandcooldown;
 
 import java.util.List;
 

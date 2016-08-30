@@ -7,8 +7,23 @@ commands:
   fixall:
     usage: /<command>
     description: Fixes all items in inventory
+  setkit:
+    usage: /<command> <name>
+    description: Sets items for kit
+  kitsign:
+    usage: /<command>
+    description: Adds and removes kit signs
+  kreload:
+    usage: /<command>
+    description:
     
 permissions:
   fixall.use:
     default: OP
     description: Access to /fixall
+  kit.set:
+    default: OP
+    description: Access to create kits and kit signs
+  killa.reload:
+    default: OP
+    description: Access to /kreload

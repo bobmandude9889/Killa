@@ -1,3 +1,7 @@
 commands:
   #Cooldown of /heal for 1 minute
   heal: 60
+  
+#Message when someone clicks the sign to get a kit
+#{kit} is replaced with name of kit
+got_kit_message: "&7Recieved kit &a{kit}"

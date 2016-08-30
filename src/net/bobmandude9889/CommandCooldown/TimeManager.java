@@ -1,9 +1,12 @@
-package net.bobmandude9889.CommandCooldown;
+package net.bobmandude9889.commandcooldown;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,9 +18,15 @@ public class TimeManager implements Listener {
 
 	private static HashMap<Player, HashMap<String, Long>> useTimes;
 
+	private static File configFile;
+	private static YamlConfiguration config;
+	
 	public TimeManager() {
 		useTimes = new HashMap<Player, HashMap<String, Long>>();
-		System.out.println("init timemanager");
+
+		configFile = new File(Main.instance.getDataFolder(),"times.yml");
+		config = YamlConfiguration.loadConfiguration(configFile);
+		
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			loadPlayer(player);
 		}
@@ -30,8 +39,8 @@ public class TimeManager implements Listener {
 
 	public static void loadPlayer(Player player) {
 		System.out.println("load player " + player.getUniqueId());
-		Main.instance.getConfig().createSection("players");
-		ConfigurationSection players = Main.instance.getConfig().getConfigurationSection("players");
+		config.createSection("players");
+		ConfigurationSection players = config.getConfigurationSection("players");
 		HashMap<String, Long> times = new HashMap<String, Long>();
 		if (players.contains(player.getUniqueId().toString())) {
 			ConfigurationSection playerSect = players.getConfigurationSection(player.getUniqueId().toString());
@@ -43,7 +52,7 @@ public class TimeManager implements Listener {
 	}
 
 	public static void saveTimes() {
-		ConfigurationSection players = Main.instance.getConfig().getConfigurationSection("players");
+		ConfigurationSection players = config.getConfigurationSection("players");
 		for(Player player : useTimes.keySet()){
 			players.createSection(player.getUniqueId().toString());
 			ConfigurationSection playerSect = players.getConfigurationSection(player.getUniqueId().toString());
@@ -52,7 +61,11 @@ public class TimeManager implements Listener {
 				playerSect.set(key, times.get(key));
 			}
 		}
-		Main.instance.saveConfig();
+		try {
+			config.save(configFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void setUseTime(Player player, String command) {
